@@ -1,53 +1,40 @@
-import { NextResponse } from 'next/server';
-import { Resend } from 'resend';
-import WelcomeEmail from "../../../../emails/WelcomeEmail";
-// import { getStoryblokApi, apiPlugin } from '@storyblok/react';
+import { NextResponse } from 'next/server'
+import { Resend } from 'resend'
+import WelcomeEmail from '../../../../emails/WelcomeEmail'
+import { getStoryblokApi } from '@storyblok/react'
+import { loadStoryblok } from '../../layout'
+loadStoryblok()
 
 export async function POST() {
   try {
-
-    // const storyblokApi = getStoryblokApi()
-    // const { data: {story} } = await storyblokApi.get('cdn/stories/email/template', {  version: "draft" });
-    const resend = new Resend(process.env.RESEND_API_KEY);
+    const storyblokApi = getStoryblokApi()
+    const {
+      data: { story },
+    } = await storyblokApi.get('cdn/stories/email/template', {
+      version: 'draft',
+    })
+    const resend = new Resend(process.env.RESEND_API_KEY)
     const data = await resend.emails.send({
-      from: "Storyblok <onboarding@resend.dev>",
+      from: 'Storyblok <onboarding@resend.dev>',
       to: [process.env.TESTING_EMAIL_ADDRESS],
-      subject: "Welcome to Storyblok",
+      subject: 'Welcome to Storyblok',
       react: WelcomeEmail({
-        // blok: story.content,
-        // firstName: ""
-      })
-    });
+        blok: story,
+        firstName: 'Dipankar Maikap',
+      }),
+    })
 
     return NextResponse.json({
-      message: "Email sent successfully", 
-      data
-    });
-
-  } catch(error){
+      message: 'Email sent successfully',
+      data,
+    })
+  } catch (error) {
     return NextResponse.json({
       error,
-      message: "Failed To send"
+      message: 'Failed To send',
     })
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import EmailTemplate from '../../../../components/EmailTemplate';
 // import { Resend } from 'resend';
