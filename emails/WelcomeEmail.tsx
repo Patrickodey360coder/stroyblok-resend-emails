@@ -9,107 +9,111 @@ import {
   Preview,
   Section,
   Text,
-} from "@react-email/components";
-import * as React from "react";
+} from '@react-email/components'
+import { storyblokEditable } from '@storyblok/react'
+
+import * as React from 'react'
 
 interface WelcomeEmailProps {
-  firstName: string;
+  firstName: string
   blok: any
-
 }
 
 const baseUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
-  : "";
+  : ''
 
-export const WelcomeEmail = ({
-  firstName, blok 
-}: WelcomeEmailProps) => (
-  console.log(blok),
-  <Html>
-    <Head />
-    <Preview>
-      {blok.preheader ?? "The sales intelligence platform that helps you uncover qualified leads."}
-    </Preview>
-    <Body style={main}>
-      <Container style={container}>
-        <Img
-          src={`${baseUrl}/static/koala-logo.png`}
-          width="170"
-          height="50"
-          alt="Koala"
-          style={logo}
-        />
-        <Text style={paragraph}>{blok.header ?? "Hi"} {firstName},</Text>
-        <Text style={paragraph}>
-         {blok.summary ?? "Welcome to Koala, the sales intelligence platform that helps you uncover qualified leads and close deals faster."}
-        </Text>
-        <Section style={btnContainer}>
-          <Button style={button} href="https://getkoala.com">
-            Get started
-          </Button>
-        </Section>
-        <Text style={paragraph}>
-          Best,
-          <br />
-          The Storyblok team
-        </Text>
-        <Hr style={hr} />
-        <Text style={footer}>
-          Storyblok GmbH, Peter-Behrens-Platz 2, 4020 Linz, Austria
-        </Text>
-      </Container>
-    </Body>
-  </Html>
-);
+export const WelcomeEmail = ({ firstName, blok }: WelcomeEmailProps) => {
+  return (
+    <Html>
+      <Head />
+      <Preview>
+        {blok.preheader ??
+          'The sales intelligence platform that helps you uncover qualified leads.'}
+      </Preview>
+      <Body style={main} {...storyblokEditable(blok)}>
+        <Container style={container}>
+          <Img
+            src={`${baseUrl}/static/koala-logo.png`}
+            width="170"
+            height="50"
+            alt="Koala"
+            style={logo}
+          />
+          <Text style={paragraph}>
+            {blok.header ?? 'Hi'} {firstName},
+          </Text>
+          <Text style={paragraph}>
+            {blok.summary ??
+              'Welcome to Koala, the sales intelligence platform that helps you uncover qualified leads and close deals faster.'}
+          </Text>
+          <Section style={btnContainer}>
+            <Button style={button} href="https://getkoala.com">
+              Get started
+            </Button>
+          </Section>
+          <Text style={paragraph}>
+            Best,
+            <br />
+            The Storyblok team
+          </Text>
+          <Hr style={hr} />
+          <Text style={footer}>
+            Storyblok GmbH, Peter-Behrens-Platz 2, 4020 Linz, Austria
+          </Text>
+        </Container>
+      </Body>
+    </Html>
+  )
+}
 
 WelcomeEmail.PreviewProps = {
-  firstName: "",
-} as WelcomeEmailProps;
+  firstName: '',
+} as WelcomeEmailProps
 
-export default WelcomeEmail;
+export default WelcomeEmail
 
 const main = {
-  backgroundColor: "#ffffff",
+  backgroundColor: '#ffffff',
   fontFamily:
     '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
-};
+}
 
 const container = {
-  margin: "0 auto",
-  padding: "20px 0 48px",
-};
+  margin: '0 auto',
+  padding: '20px 0 48px',
+}
 
 const logo = {
-  margin: "0 auto",
-};
+  margin: '0 auto',
+}
 
 const paragraph = {
-  fontSize: "16px",
-  lineHeight: "26px",
-};
+  fontSize: '16px',
+  lineHeight: '26px',
+}
 
 const btnContainer = {
-  textAlign: "center" as const,
-};
+  textAlign: 'center' as const,
+}
 
 const button = {
-  backgroundColor: "#5F51E8",
-  borderRadius: "3px",
-  color: "#fff",
-  fontSize: "16px",
-  textDecoration: "none",
-  textAlign: "center" as const,
-  display: "block",
-  padding: "12px",
-};
+  backgroundColor: '#5F51E8',
+  borderRadius: '3px',
+  color: '#fff',
+  fontSize: '16px',
+  textDecoration: 'none',
+  textAlign: 'center' as const,
+  display: 'block',
+  padding: '12px',
+}
 
 const hr = {
-  borderColor: "#cccccc",
-  margin: "20px 0",
-};
+  borderColor: '#cccccc',
+  margin: '20px 0',
+}
 
 const footer = {
-  color: "#8898aa",
-  fontSize: "12px",
-};
+  color: '#8898aa',
+  fontSize: '12px',
+}
